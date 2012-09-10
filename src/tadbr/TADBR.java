@@ -9,7 +9,7 @@ public class TADBR {
     private boolean myColor;			/**< TiAroDiBrutto color */
     private boolean enemyColor;			/**< EnemyPlayer color */
     private Chessboard globalChessboard;        /**< Real chessboard */
-    private AlphaBeta algorithm;                /**< AlphaBeta alg class */
+    private Algorithm anAlgorithm;              /**< Algorithm class */
     private String[] commandLine;
     
     private boolean black = false;
@@ -21,27 +21,27 @@ public class TADBR {
     public static void main (String[] args) {
     	TADBR aTADBRInstance = new TADBR();
         aTADBRInstance.commandLine = args;
-        aTADBRInstance.play();
+        
+        //TODO: Only implemented "black player" for now
+        aTADBRInstance.play(new Chessboard(), new AlphaBeta(1), aTADBRInstance.black);
     }
     
     
-    public void play(){
+    public void play(Chessboard aChessboard, Algorithm anAlgorithm, boolean aColor){
         
-        setGlobalChessboard(new Chessboard());
-        AlphaBeta anAlgorithm = new AlphaBeta();
+        setGlobalChessboard(aChessboard);
         setAlgorithm(anAlgorithm);
         
         //Set Algorithm profoundity
     	if (commandLine.length > 0){
-        	anAlgorithm.setProfAlphaBeta(Helper.returnProf(commandLine));
+        	anAlgorithm.setProfundity(Helper.returnProf(commandLine));
         }
         else {
-    		anAlgorithm.setProfAlphaBeta(3);
+    		anAlgorithm.setProfundity(4);
         }
         
-        //TODO: Only implemented "black player" for now
-        setEnemyColor(white);       
-        setMyColor(black);
+        setMyColor(aColor);
+        setEnemyColor(!aColor);       
         
         //Main loop
         while (true) {
@@ -173,15 +173,15 @@ public class TADBR {
     /**
      * @return the algorithm
      */
-    public AlphaBeta getAlgorithm() {
-        return algorithm;
+    public Algorithm getAlgorithm() {
+        return anAlgorithm;
     }
 
     /**
      * @param algorithm the algorithm to set
      */
-    public void setAlgorithm(AlphaBeta algorithm) {
-        this.algorithm = algorithm;
+    public void setAlgorithm(Algorithm algorithm) {
+        this.anAlgorithm = algorithm;
     }
 
     /**

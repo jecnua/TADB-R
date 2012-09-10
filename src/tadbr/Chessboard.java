@@ -75,18 +75,18 @@ public class Chessboard implements Cloneable {
 
         
         //TODO: Not used for now
-		for (int i1=0;i1<8;i1++) {
-		    for (int j=0;j<8;j++) {
-		        if (chessboard[j][i1]!=null) {
-		        	if (chessboard[j][i1].isColour()) {
-                                getWhites().add((Piece)chessboard[j][i1]);
-                            }
-		        	else {
-                                getBlacks().add((Piece)chessboard[j][i1]);
-                            }
-		        }
-		    }
-		}
+        for (int i1=0;i1<8;i1++) {
+            for (int j=0;j<8;j++) {
+                if (chessboard[j][i1]!=null) {
+                    if (chessboard[j][i1].isColour()) {
+                        whites.add((Piece)chessboard[j][i1]);
+                    }
+                    else {
+                        blacks.add((Piece)chessboard[j][i1]);
+                    }
+                }
+            }
+        }
     }
     
     
@@ -129,20 +129,22 @@ public class Chessboard implements Cloneable {
         moves = piece.generateMovesForThisPiece(this);
         //For each move find if it eats something
         for (Move move : moves) {
-			Piece enemyPiece = (Piece)chessboard[move.getEndY()][move.getEndX()];
-        	if ((enemyPiece != null) && (enemyPiece.isColour() != piece.isColour())){
-        		 enemyPiece.noMoreInDanger(); //I will no longer set it in danger
-        	}
-		}
+            Piece enemyPiece = (Piece)chessboard[move.getEndY()][move.getEndX()];
+            if ((enemyPiece != null) && (enemyPiece.isColour() != piece.isColour())){
+                enemyPiece.noMoreInDanger(); //I will no longer set it in danger
+            }
+        }
         
         /* Apply changes */
         
         piece.setPosition(toX,toY);
         
-        if (piece.isColour() && chessboard[toY][toX] != null)
-        	getBlacks().remove(chessboard[toY][toX]);
-        if (!(piece.isColour()) && chessboard[toY][toX] != null)
-        	getWhites().remove(chessboard[toY][toX]);
+        if (piece.isColour() && chessboard[toY][toX] != null) {
+            blacks.remove(chessboard[toY][toX]);
+        }
+        if (!(piece.isColour()) && chessboard[toY][toX] != null) {
+            whites.remove(chessboard[toY][toX]);
+        }
         
         chessboard[toY][toX] = piece;
         chessboard[fromY][fromX] = null;
@@ -156,11 +158,11 @@ public class Chessboard implements Cloneable {
         moves = piece.generateMovesForThisPiece(this);
         //For each move find if it eats something
         for (Move move : moves) {
-			Piece enemyPiece = (Piece)chessboard[move.getEndY()][move.getEndX()];
-        	if ((enemyPiece != null) && (enemyPiece.isColour() != piece.isColour())){
-        		 enemyPiece.inDanger();
-        	}
-		}
+            Piece enemyPiece = (Piece)chessboard[move.getEndY()][move.getEndX()];
+            if ((enemyPiece != null) && (enemyPiece.isColour() != piece.isColour())){
+                enemyPiece.inDanger();
+            }
+        }
         
         /* TODO: Change my status if i am no more in danger */
         /* TODO: Make tiaro understand promotion */
@@ -197,7 +199,7 @@ public class Chessboard implements Cloneable {
      */
     public Piece getPiece(int x, int y) {
         try {
-        	return (Piece)chessboard[y][x];
+            return (Piece)chessboard[y][x];
         }
         catch(ArrayIndexOutOfBoundsException e) {
             return null;
@@ -214,12 +216,14 @@ public class Chessboard implements Cloneable {
     public ArrayList<Move> generateAllPossibleMoves (boolean color) {
         
     	ArrayList<Move> moves = new ArrayList<Move>();    	
-    	List<Piece> temp = new ArrayList<Piece>();
+    	List<Piece> temp;
     	
-    	if (color)
-    		temp = getWhites();
-    	else
-    		temp = getBlacks();
+    	if (color) {
+            temp = whites;
+        }
+    	else {
+            temp = blacks;
+        }
 
         for (Piece thisPiece : temp) {
             ArrayList<Move> movesForThisPiece = thisPiece.generateMovesForThisPiece(this);
@@ -230,10 +234,12 @@ public class Chessboard implements Cloneable {
             }
 		}
         
-    	if (color)
-    		setnWhiteMoves(moves.size());
-    	else
-    		setnBlackMoves(moves.size());   
+    	if (color) {
+            setnWhiteMoves(moves.size());
+        }
+    	else {
+            setnBlackMoves(moves.size());
+        }   
 	    
         return moves;
     }
@@ -242,6 +248,7 @@ public class Chessboard implements Cloneable {
      * (non-Javadoc)
      * @see java.lang.Object#clone()
      */
+    @Override
     public Object clone() {
     	
 		Chessboard chessboardClone = new Chessboard(this.getnWhiteMoves(), this.getnBlackMoves());
@@ -251,13 +258,16 @@ public class Chessboard implements Cloneable {
 		        if (this.chessboard[y][x] != null) {
 		        	Piece pieceClone = (Piece)chessboard[y][x].clone();
 		            chessboardClone.chessboard[y][x] = pieceClone;
-		            if (pieceClone.isColour())
-		            	chessboardClone.getWhites().add((Piece)pieceClone);
-		            else
-		            	chessboardClone.getBlacks().add((Piece)pieceClone);
+		            if (pieceClone.isColour()) {
+                                chessboardClone.whites.add((Piece)pieceClone);
+                            }
+		            else {
+                                chessboardClone.blacks.add((Piece)pieceClone);
+                            }
 		        }
-		        else
-		            chessboardClone.chessboard[y][x] = null;
+		        else {
+                            chessboardClone.chessboard[y][x] = null;
+                        }
 		    }
 		}
 		return chessboardClone;
@@ -276,12 +286,12 @@ public class Chessboard implements Cloneable {
         
         switch (ID) {
         
-        	//Blacks
-            case 1:		return "a7";
-            case 3:		return "b7";
-            case 5:		return "c7";
-            case 7:		return "d7";
-            case 9:		return "e7";
+            //Blacks
+            case 1:	return "a7";
+            case 3:	return "b7";
+            case 5:	return "c7";
+            case 7:	return "d7";
+            case 9:	return "e7";
             case 11:	return "f7";
             case 13:	return "g7";
             case 15:	return "h7";
