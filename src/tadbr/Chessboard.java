@@ -1,4 +1,5 @@
 package tadbr;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,10 +78,12 @@ public class Chessboard implements Cloneable {
 		for (int i1=0;i1<8;i1++) {
 		    for (int j=0;j<8;j++) {
 		        if (chessboard[j][i1]!=null) {
-		        	if (chessboard[j][i1].isColour())
-		        		getWhites().add((Piece)chessboard[j][i1]);
-		        	else
-		        		getBlacks().add((Piece)chessboard[j][i1]);
+		        	if (chessboard[j][i1].isColour()) {
+                                getWhites().add((Piece)chessboard[j][i1]);
+                            }
+		        	else {
+                                getBlacks().add((Piece)chessboard[j][i1]);
+                            }
 		        }
 		    }
 		}

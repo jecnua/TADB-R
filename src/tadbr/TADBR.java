@@ -6,34 +6,42 @@ package tadbr;
  */
 public class TADBR {
     
-    private static boolean mycolor;			/**< TiAroDiBrutto color */
-    private static boolean playerColor;			/**< EnemyPlayer color */
-    private static Chessboard globalChessboard;         /**< Real chessboard */
-    private static AlphaBeta alg;                       /**< AlphaBeta alg class */
+    private boolean myColor;			/**< TiAroDiBrutto color */
+    private boolean enemyColor;			/**< EnemyPlayer color */
+    private Chessboard globalChessboard;        /**< Real chessboard */
+    private AlphaBeta algorithm;                /**< AlphaBeta alg class */
+    private String[] commandLine;
     
-    private static boolean black = false;
-    private static boolean white = true;
+    private boolean black = false;
+    private boolean white = true;
     
     /**
      * "Main" function
      */
     public static void main (String[] args) {
-    	
-        String inputCommunication = new String();
-        globalChessboard = new Chessboard();
-        alg = new AlphaBeta();
+    	TADBR aTADBRInstance = new TADBR();
+        aTADBRInstance.commandLine = args;
+        aTADBRInstance.play();
+    }
+    
+    
+    public void play(){
         
-        //Alg
-    	if (args.length > 0){
-        	alg.setProfAlphaBeta(Helper.returnProf(args));
+        setGlobalChessboard(new Chessboard());
+        AlphaBeta anAlgorithm = new AlphaBeta();
+        setAlgorithm(anAlgorithm);
+        
+        //Set Algorithm profoundity
+    	if (commandLine.length > 0){
+        	anAlgorithm.setProfAlphaBeta(Helper.returnProf(commandLine));
         }
         else {
-    		alg.setProfAlphaBeta(3);
+    		anAlgorithm.setProfAlphaBeta(3);
         }
         
-    	//Color
-        setColour(black);       //TODO: Only implemented "black player" for now
-        setPlayerColor(white);
+        //TODO: Only implemented "black player" for now
+        setEnemyColor(white);       
+        setMyColor(black);
         
         //Main loop
         while (true) {
@@ -41,9 +49,9 @@ public class TADBR {
             //TODO: if is move lui->io, If my move io->lui
         	
             /** User turn **/
-        	
+            
             //waiting for xboard
-            inputCommunication = Helper.readFromInput();
+            String inputCommunication = Helper.readFromInput();
             
             if (inputCommunication.equalsIgnoreCase("XBoard")) {
                 //communication protocol
@@ -71,7 +79,7 @@ public class TADBR {
                 int endX = Helper.getXfromString(inputCommunication.substring(11,13));
                 int endY = Helper.getYfromString(inputCommunication.substring(11,13));
                 
-                Move playerMove = new Move(startX,startY,endX,endY,isPlayerColor());
+                Move playerMove = new Move(startX,startY,endX,endY,isEnemyColor());
                 
                 /* TODO: Flag
                 playerMove = Move.MossaPromozione (playerMove, globalChessboard);
@@ -84,7 +92,7 @@ public class TADBR {
                 
                 //For now let's assume that it doesn't do illegal move
                 if (playerMove.isValid()) {
-                	globalChessboard.doMove(playerMove);
+                	getGlobalChessboard().doMove(playerMove);
                 }
                 else {
                     System.err.println("ERROR: This move is not valid");
@@ -106,36 +114,102 @@ public class TADBR {
                 
                 /** MyTurn **/
                
-                Move myMove = alg.chooseMove(globalChessboard,isColour());
+                Move myMove = getAlgorithm().chooseMove(getGlobalChessboard(),isMyColor());
                 if (myMove == null) {
                     System.err.println("ERROR: No possible move.");
                     System.out.println("resign");
                     System.exit(0);
                 }
                 else {
-                    globalChessboard.doMove(myMove); //TODO: Check return value?
+                    getGlobalChessboard().doMove(myMove); //TODO: Check return value?
                     System.out.println(myMove.moveOutputString());
                 }
             }
         }
     }
     
-    //GETTER AND SETTER
-
-    public static void setColour(boolean colour) {
-	TADBR.mycolor = colour;
+    /**
+     * @return the myColor
+     */
+    public boolean isMyColor() {
+        return myColor;
     }
 
-    public static boolean isColour() {
-        return mycolor;
+    /**
+     * @param myColor the myColor to set
+     */
+    public void setMyColor(boolean myColor) {
+        this.myColor = myColor;
     }
 
-    public static void setPlayerColor(boolean playerColor) {
-        TADBR.playerColor = playerColor;
+    /**
+     * @return the enemyColor
+     */
+    public boolean isEnemyColor() {
+        return enemyColor;
     }
 
-    public static boolean isPlayerColor() {
-        return playerColor;
+    /**
+     * @param enemyColor the enemyColor to set
+     */
+    public void setEnemyColor(boolean enemyColor) {
+        this.enemyColor = enemyColor;
+    }
+
+    /**
+     * @return the globalChessboard
+     */
+    public Chessboard getGlobalChessboard() {
+        return globalChessboard;
+    }
+
+    /**
+     * @param globalChessboard the globalChessboard to set
+     */
+    public void setGlobalChessboard(Chessboard globalChessboard) {
+        this.globalChessboard = globalChessboard;
+    }
+
+    /**
+     * @return the algorithm
+     */
+    public AlphaBeta getAlgorithm() {
+        return algorithm;
+    }
+
+    /**
+     * @param algorithm the algorithm to set
+     */
+    public void setAlgorithm(AlphaBeta algorithm) {
+        this.algorithm = algorithm;
+    }
+
+    /**
+     * @return the black
+     */
+    public boolean isBlack() {
+        return black;
+    }
+
+    /**
+     * @param black the black to set
+     */
+    public void setBlack(boolean black) {
+        this.black = black;
+    }
+
+    /**
+     * @return the white
+     */
+    public boolean isWhite() {
+        return white;
+    }
+
+    /**
+     * @param white the white to set
+     */
+    public void setWhite(boolean white) {
+        this.white = white;
     }
     
  }

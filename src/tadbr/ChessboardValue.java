@@ -27,8 +27,9 @@ public class ChessboardValue {
             color = move.isColour();
             
             //Do the move and set the validity
-            if (!(actualChessboard.doMove(move)))
+            if (!(actualChessboard.doMove(move))) {
                 move.setValid(false);
+            }
             else {
                 lastMove = move;
                 lastMove.setValid(true);
@@ -57,10 +58,12 @@ public class ChessboardValue {
      * @return The best possible move
      */
     public Move getBestMove() {
-        if (getMoves().isEmpty()) 
-        	return null;
-        else
-        	return getMoves().get(0);
+        if (getMoves().isEmpty()) {
+            return null;
+        }
+        else {
+            return getMoves().get(0);
+        }
     }
     
     
@@ -74,22 +77,28 @@ public class ChessboardValue {
     public ChessboardValue VSmin(ChessboardValue elseVChessboard) {
     	
         if ((lastMove == null) && (elseVChessboard.lastMove == null)) {
-            if (getValue() < elseVChessboard.getValue())
-            	return this;
-            else 
-            	return elseVChessboard;
+            if (getValue() < elseVChessboard.getValue()) {
+                return this;
+            }
+            else {
+                return elseVChessboard;
+            }
         }
         
-        if (lastMove == null)
+        if (lastMove == null) {
             return elseVChessboard;
+        }
         
-        if (elseVChessboard.lastMove == null)
+        if (elseVChessboard.lastMove == null) {
             return this;
+        }
         
-        if (getValue() < elseVChessboard.getValue())
-        	return this;
-        else
-        	return elseVChessboard;
+        if (getValue() < elseVChessboard.getValue()) {
+            return this;
+        }
+        else {
+            return elseVChessboard;
+        }
     }
     
     
@@ -103,22 +112,28 @@ public class ChessboardValue {
     public ChessboardValue VSmax(ChessboardValue elseVChessboard) {
     	
         if ((lastMove==null)&&(elseVChessboard.lastMove==null)) {
-            if (getValue()>elseVChessboard.getValue())
-            	return this;
-            else
-            	return elseVChessboard;
+            if (getValue()>elseVChessboard.getValue()) {
+                return this;
+            }
+            else {
+                return elseVChessboard;
+            }
         }
         
-        if (lastMove == null)
+        if (lastMove == null) {
             return elseVChessboard;
+        }
             
-        if (elseVChessboard.lastMove == null)
+        if (elseVChessboard.lastMove == null) {
             return this;
+        }
             
-        if (getValue() > elseVChessboard.getValue())
-        	return this;
-        else
-        	return elseVChessboard;
+        if (getValue() > elseVChessboard.getValue()) {
+            return this;
+        }
+        else {
+            return elseVChessboard;
+        }
     }
     
     
@@ -126,10 +141,12 @@ public class ChessboardValue {
      * 
      */
     public boolean isLastMoveValid() {
-        if (lastMove != null)
+        if (lastMove != null) {
             return lastMove.isValid();
-        else
-        	return false;
+        }
+        else {
+            return false;
+        }
     }
     
     

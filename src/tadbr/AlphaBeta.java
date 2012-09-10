@@ -1,4 +1,5 @@
 package tadbr;
+
 import java.util.ArrayList;
 
 /**
@@ -52,10 +53,12 @@ public class AlphaBeta {
     private ChessboardValue alphaBetaAlg(ChessboardValue chessValue, ChessboardValue alpha, ChessboardValue beta, boolean color, int counter) {
         
     	//If node == leaf then return heuristic value of chessboard
-        if (counter >= getProfAlphaBeta())
+        if (counter >= getProfAlphaBeta()) {
             return (chessValue);
-        else
+        }
+        else {
             counter++;
+        }
         
         //Generate every son for this node
         //(all possible moves for this color on this chessboard)
@@ -73,17 +76,21 @@ public class AlphaBeta {
 		}
         
         if (color) {
-            if (beta.getValue() <= alpha.getValue())
+            if (beta.getValue() <= alpha.getValue()) {
                 return beta;
-            else
-            	return alpha;
+            }
+            else {
+                return alpha;
+            }
         }
         else {
-	        //ritorno il minimo
-	        if (beta.getValue() <= alpha.getValue())
-	            return alpha;
-	        else
-	        	return beta;
+            //ritorno il minimo
+            if (beta.getValue() <= alpha.getValue()) {
+                return alpha;
+            }
+            else {
+                return beta;
+            }
         }
     }
     

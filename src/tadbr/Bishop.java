@@ -1,4 +1,5 @@
 package tadbr;
+
 import java.util.ArrayList;
 
 /**
@@ -16,10 +17,12 @@ public class Bishop extends Piece {
         setId(ID);
         setColour(Helper.IsEven(ID));
         
-        if (isColour() == false)
-        	setValue(-325);
-        else
-        	setValue(325);
+        if (isColour() == false) {
+            setValue(-325);
+        }
+        else {
+            setValue(325);
+        }
         
         //Starting position
         String square = getStartingPosition(ID);

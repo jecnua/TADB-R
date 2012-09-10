@@ -85,12 +85,15 @@ public class Helper {
      */
     public static int returnProf (String[] input) {
         
-    	int ret = 3;
-        if (input[0].charAt(0) == '1') ret = 1;
-        if (input[0].charAt(0) == '2') ret = 2;
-        if (input[0].charAt(0) == '3') ret = 3;
-        if (input[0].charAt(0) == '4') ret = 4;
-        if (input[0].charAt(0) == '5') ret = 5;
+        int ret;
+        switch (input[0].charAt(0)){
+            case ('1'): ret = 1; break;
+            case ('2'): ret = 2; break;
+            case ('3'): ret = 3; break;
+            case ('4'): ret = 4; break;
+            case ('5'): ret = 5; break;
+            default: ret = 2;
+        }
         return ret;
     }
     
@@ -101,12 +104,13 @@ public class Helper {
      * @return True if even
      */
     public static boolean IsEven (int number) {
-    	
-	    int half = number / 2;
-	    if ((half * 2) == number)
-	        return true;
-	    else
-	        return false;
+        int half = number / 2;
+        if ((half * 2) == number) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
     
     /**
