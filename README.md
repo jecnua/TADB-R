@@ -3,8 +3,8 @@ TADB-R
 
 TADB-R is an _always on beta_ chess IA. It has been written to work with the
 xboard/winboard application. This project is in its third life iteration and it
-will hopefully continue do die and reborn. Rigth now it is still not usable
-since a *IfYouNotFixMeItWillAlwaysCrash* bug stil needs to be fixed. But still I
+will hopefully continue do die and reborn. Right now it is still not usable
+since a *IfYouNotFixMeItWillAlwaysCrash* bug still needs to be fixed. But still I
  have some emotional attachment to it. It will work and play enough to lose...
  one day.
 
