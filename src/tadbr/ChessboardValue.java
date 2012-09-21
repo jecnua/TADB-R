@@ -9,25 +9,23 @@ import java.util.ArrayList;
  */
 public class ChessboardValue {
 	
-    private Chessboard actualChessboard = null;	/*< The chessboard */
+    private Chessboard actualChessboardClone = null;	/*< The chessboard */
     private Move lastMove = null;
     private ArrayList<Move> moves;
     private int value;
     private boolean color;
     
-    /** Creates a new instance of ChessboardValue */
+    
     public ChessboardValue(Chessboard chessboard, Move move, ArrayList<Move> earlyMoves) {
     	
-        actualChessboard = (Chessboard) chessboard.clone();
+        actualChessboardClone = (Chessboard)chessboard.clone();
         moves = new ArrayList<Move>();
         
         //If it's not the first time [<>null(=> <> form alpha or beta)] 
         if (move != null) {
-        	
             color = move.isColour();
-            
             //Do the move and set the validity
-            if (!(actualChessboard.doMove(move))) {
+            if (!(actualChessboardClone.doMove(move))) {
                 move.setValid(false);
             }
             else {
@@ -36,10 +34,10 @@ public class ChessboardValue {
 
                 //Let's copy the moves
                 //TODO: Clone?
-                if (earlyMoves != null) {               
+                if (earlyMoves != null) {
                     for (Move thisMove : earlyMoves) {
-                                            moves.add((Move) thisMove);
-                                    }
+                        moves.add((Move) thisMove);
+                    }
                 }
 
                 //Add this move
@@ -160,7 +158,7 @@ public class ChessboardValue {
     public int chessboardValue (boolean color) {
     	
         int val = 0;
-        int temp = 0;
+        int temp;
     	
         for (int x=0; x<8; x++) {
             for (int y=0; y<8; y++) {
@@ -231,45 +229,30 @@ public class ChessboardValue {
     }
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    //GETTER AND SETTER
-
     public void setValue(int value) {
-		this.value = value;
-	}
+        this.value = value;
+    }
 
-	public int getValue() {
-		return value;
-	}
+    public int getValue() {
+        return value;
+    }
 
-	private void setMoves(ArrayList<Move> moves) {
-		this.moves = moves;
-	}
+    private void setMoves(ArrayList<Move> moves) {
+        this.moves = moves;
+    }
 
-	public ArrayList<Move> getMoves() {
-		return moves;
-	}
-
-
-	public void setActualChessboard(Chessboard actualChessboard) {
-		this.actualChessboard = actualChessboard;
-	}
+    public ArrayList<Move> getMoves() {
+        return moves;
+    }
 
 
-	public Chessboard getActualChessboard() {
-		return actualChessboard;
-	}
+    public void setActualChessboard(Chessboard actualChessboard) {
+        this.actualChessboardClone = actualChessboard;
+    }
+
+
+    public Chessboard getActualChessboard() {
+        return actualChessboardClone;
+    }
     
 }

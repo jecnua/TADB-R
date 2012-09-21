@@ -55,7 +55,8 @@ public class AlphaBeta extends Algorithm {
         //(all possible moves for this color on this chessboard)
         ArrayList<Move> allPossibleMove = chessValue.getActualChessboard().generateAllPossibleMoves(color);
     	
-        for (Move thisMove : allPossibleMove) {
+        for (Move thisMove: allPossibleMove) {
+            
             //New ChessboardValue that have my son (move) and my path
             ChessboardValue thisSon = new ChessboardValue(chessValue.getActualChessboard(), thisMove, chessValue.getMoves());
             if (thisSon.isLastMoveValid()) {
@@ -66,7 +67,7 @@ public class AlphaBeta extends Algorithm {
                     beta = beta.VSmin(alphaBetaAlg(thisSon, alpha, beta, !(color), counter));
                 }
             }
-		}
+        }
         
         if (color) {
             if (beta.getValue() <= alpha.getValue()) {

@@ -11,15 +11,15 @@ public class King extends Piece {
     /** Creates a new instance of King from it's ID*/
     public King(int ID) {
     	
-    	super();
-    	
         setId(ID);        
         setColour(Helper.IsEven(ID));
 
-        if (isColour()==false)
-        	setValue(-200);
-        else
-        	setValue(200);
+        if (isColour()==false) {
+            setValue(-200);
+        }
+        else {
+            setValue(200);
+        }
         
         //Starting position
         String square = getStartingPosition(ID);
@@ -30,6 +30,7 @@ public class King extends Piece {
     /**
      * Used when a chessboard must be cloned.
      */
+    @Override
     public Object clone() {
     	
         King myClone= new King(this.getId());
@@ -47,6 +48,7 @@ public class King extends Piece {
      * @param chessboard The actual chessboard
      * @return An array of all possible moves (not the good ones!)
      */
+    @Override
     public ArrayList<Move> generateMovesForThisPiece(Chessboard chessboard) {
     	
         int toX = 0, toY = 0;
@@ -96,8 +98,9 @@ public class King extends Piece {
              }
             
             Move move = checkThis(toX, toY, chessboard);
-            if (move != null)
-            	moves.add(move);
+            if (move != null) {
+                moves.add(move);
+            }
            
     	}
         
@@ -120,14 +123,16 @@ public class King extends Piece {
         if (destination != null) {
            if (destination.isColour() != this.isColour()) {
                move = new Move(getX(), getY(), toX, toY, this.isColour());
-               if (move.isValid())
-            	   return move;
+               if (move.isValid()) {
+                   return move;
+               }
            }
         }
         else {
            move = new Move(getX(),getY(), toX, toY, this.isColour());
-           if (move.isValid())
-               return move;
+           if (move.isValid()) {
+                return move;
+            }
         }
         
         return null;

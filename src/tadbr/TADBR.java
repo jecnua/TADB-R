@@ -23,7 +23,7 @@ public class TADBR {
         aTADBRInstance.commandLine = args;
         
         //TODO: Only implemented "black player" for now
-        aTADBRInstance.play(new Chessboard(), new AlphaBeta(1), aTADBRInstance.black);
+        aTADBRInstance.play(new Chessboard(), new AlphaBeta(3), aTADBRInstance.black);
     }
     
     
@@ -34,10 +34,10 @@ public class TADBR {
         
         //Set Algorithm profoundity
     	if (commandLine.length > 0){
-        	anAlgorithm.setProfundity(Helper.returnProf(commandLine));
+            anAlgorithm.setProfundity(Helper.returnProf(commandLine));
         }
         else {
-    		anAlgorithm.setProfundity(4);
+            anAlgorithm.setProfundity(3);
         }
         
         setMyColor(aColor);
@@ -92,14 +92,13 @@ public class TADBR {
                 
                 //For now let's assume that it doesn't do illegal move
                 if (playerMove.isValid()) {
-                	getGlobalChessboard().doMove(playerMove);
+                    getGlobalChessboard().doMove(playerMove);
                 }
                 else {
                     System.err.println("ERROR: This move is not valid");
                     System.out.println("resign");
                     System.exit(0);
                 }
-                	
                 
                 /*
                 if (globalChessboard.doMove(playerMove) == 0) {
@@ -114,7 +113,7 @@ public class TADBR {
                 
                 /** MyTurn **/
                
-                Move myMove = getAlgorithm().chooseMove(getGlobalChessboard(),isMyColor());
+                Move myMove = anAlgorithm.chooseMove(getGlobalChessboard(),isMyColor());
                 if (myMove == null) {
                     System.err.println("ERROR: No possible move.");
                     System.out.println("resign");

@@ -209,7 +209,6 @@ public class Chessboard implements Cloneable {
     /**
      * Return an array of all possible moves for a
      * color.
-     * 
      * @param color The color of interest
      * @return An array of all possible moves
      */
@@ -229,10 +228,10 @@ public class Chessboard implements Cloneable {
             ArrayList<Move> movesForThisPiece = thisPiece.generateMovesForThisPiece(this);
             if (!(movesForThisPiece.isEmpty())) {
                 for (Move move : movesForThisPiece) {
-                	moves.add(move);
-				}
+                    moves.add(move);
+                }
             }
-		}
+        }
         
     	if (color) {
             setnWhiteMoves(moves.size());
@@ -251,27 +250,27 @@ public class Chessboard implements Cloneable {
     @Override
     public Object clone() {
     	
-		Chessboard chessboardClone = new Chessboard(this.getnWhiteMoves(), this.getnBlackMoves());
-		
-		for (int x=0; x<8; x++) {
-		    for (int y=0; y<8; y++) {
-		        if (this.chessboard[y][x] != null) {
-		        	Piece pieceClone = (Piece)chessboard[y][x].clone();
-		            chessboardClone.chessboard[y][x] = pieceClone;
-		            if (pieceClone.isColour()) {
-                                chessboardClone.whites.add((Piece)pieceClone);
-                            }
-		            else {
-                                chessboardClone.blacks.add((Piece)pieceClone);
-                            }
-		        }
-		        else {
-                            chessboardClone.chessboard[y][x] = null;
-                        }
-		    }
-		}
-		return chessboardClone;
-	}
+        Chessboard chessboardClone = new Chessboard(this.getnWhiteMoves(), this.getnBlackMoves());
+
+        for (int x=0; x<8; x++) {
+            for (int y=0; y<8; y++) {
+                if (this.chessboard[y][x] != null) {
+                        Piece pieceClone = (Piece)chessboard[y][x].clone();
+                    chessboardClone.chessboard[y][x] = pieceClone;
+                    if (pieceClone.isColour()) {
+                        chessboardClone.whites.add((Piece)pieceClone);
+                    }
+                    else {
+                        chessboardClone.blacks.add((Piece)pieceClone);
+                    }
+                }
+                else {
+                    chessboardClone.chessboard[y][x] = null;
+                }
+            }
+        }
+        return chessboardClone;
+    }
 
     /**
      * Return the starting position (string) of a piece
